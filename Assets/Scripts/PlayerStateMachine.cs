@@ -72,6 +72,8 @@ public class PlayerStateMachine : MonoBehaviour
     public delegate void StateChangedEvent(PlayerBaseState fromState, PlayerBaseState toState);
     public event StateChangedEvent OnStateChanged;
 
+    public Transform PlayerTransform;
+
     // State duration tracking
     private float stateEnterTime;
     public float GetStateDuration()
@@ -144,6 +146,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
+
+        
+
         // Update coyote time timer
         if (jumpGroundedGraceTimer > 0f)
             jumpGroundedGraceTimer -= Time.deltaTime;
@@ -158,6 +163,8 @@ public class PlayerStateMachine : MonoBehaviour
         wasGroundedLastFrame = isGroundedNow;
 
         currentState?.Tick(Time.deltaTime);
+
+        PlayerTransform.localScale = new Vector3(Mathf.Sign(RB.linearVelocity.x), 1f, 1f); // Flip player based on velocity
     }
 
     public void SwitchState(PlayerBaseState newState)

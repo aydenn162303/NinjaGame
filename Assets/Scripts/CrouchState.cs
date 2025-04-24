@@ -17,8 +17,9 @@ public class CrouchState : PlayerBaseState
         enterTime = Time.time;
         stateMachine.SetColliderCrouching();
         // Play crouch animation
-        if (stateMachine.Animator != null)
-            stateMachine.Animator.Play("CrouchAnimation"); // Replace with actual animation name
+        if (stateMachine.Animator != null) {
+            stateMachine.Animator.Play("Crouch"); // Replace with actual animation name
+        }
         Debug.Log($"[CrouchState] Entering Crouch State at {enterTime:F2}s");
     }
 

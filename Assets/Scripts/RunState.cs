@@ -12,8 +12,9 @@ public class RunState : PlayerBaseState
     {
         enterTime = Time.time;
         // Play run animation
-        if (stateMachine.Animator != null)
-            stateMachine.Animator.Play("RunAnimation");
+        if (stateMachine.Animator != null) {
+            stateMachine.Animator.Play("Run");
+        }
         Debug.Log($"[RunState] Entering Run State at {enterTime:F2}s");
         // Play run sound if needed
         // AudioManager.Instance?.Play("RunSound");

@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 1914377576693117475}
   m_Layer: 0
   m_Name: Player Ninja
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckPoint: {fileID: 1200896474919077014}
   groundCheckRadius: 0.2
+  PlayerTransform: {fileID: 476504}
 --- !u!70 &1779346489392483852
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

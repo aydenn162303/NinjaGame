@@ -13,8 +13,9 @@ public class WalkState : PlayerBaseState
     {
         enterTime = Time.time;
         // Play walk animation
-        if (stateMachine.Animator != null)
-            stateMachine.Animator.Play("WalkAnimation");
+        if (stateMachine.Animator != null) {
+            stateMachine.Animator.Play("Walk");
+        }
         Debug.Log($"[WalkState] Entering Walk State at {enterTime:F2}s");
         // Play walk sound if needed
         // AudioManager.Instance?.Play("WalkSound");

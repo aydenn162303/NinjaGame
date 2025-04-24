@@ -22,9 +22,9 @@ public class SlideState : PlayerBaseState
         }
 
         // Play slide animation
-        if (stateMachine.Animator != null)
-            stateMachine.Animator.Play("SlideAnimation"); // Ensure this animation exists
-
+        if (stateMachine.Animator != null) {
+            stateMachine.Animator.Play("Slide"); // Ensure this animation exists
+        }
         Debug.Log($"[SlideState] Entering Slide State at {slideStartTime:F2}s");
         // Apply initial slide impulse or set velocity
         // stateMachine.RB.velocity = slideDirection * stateMachine.SlideSpeed; // Need SlideSpeed property
