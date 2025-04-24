@@ -167,6 +167,13 @@ public class PlayerStateMachine : MonoBehaviour
         PlayerTransform.localScale = new Vector3(Mathf.Sign(RB.linearVelocity.x), 1f, 1f); // Flip player based on velocity
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
     public void SwitchState(PlayerBaseState newState)
     {
         if (currentState == newState) return; // Re-entrancy guard
