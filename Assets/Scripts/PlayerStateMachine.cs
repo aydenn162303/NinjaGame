@@ -62,8 +62,6 @@ public class PlayerStateMachine : MonoBehaviour
     public WallClingState WallClingState { get; private set; }
     public ShootState ShootState { get; private set; } // Add ShootState declaration
     public FallState FallState { get; private set; } // Add FallState declaration
-    public CrawlState CrawlState { get; private set; } // Add CrawlState declaration
-
 
     // Component References (Example)
     public Rigidbody2D RB { get; private set; }
@@ -115,14 +113,12 @@ public class PlayerStateMachine : MonoBehaviour
         // MoveState removed
         WalkState = new WalkState(this);
         RunState = new RunState(this);
-        CrawlState = new CrawlState(this); // Initialize CrawlState
     
         // Register states
         stateRegistry[nameof(PlayerIdleState)] = IdleState; // Register the new PlayerIdleState
         // MoveState registration removed
         stateRegistry[nameof(WalkState)] = WalkState;
         stateRegistry[nameof(RunState)] = RunState;
-        stateRegistry[nameof(CrawlState)] = CrawlState; // Register CrawlState
         JumpState = new JumpState(this);
         stateRegistry[nameof(JumpState)] = JumpState;
         CrouchState = new CrouchState(this);
@@ -168,12 +164,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         currentState?.Tick(Time.deltaTime);
 
-        Vector2 movementInput = GetMovementInput();
-
-        if (movementInput.x != 0) 
-        {
         PlayerTransform.localScale = new Vector3(Mathf.Sign(RB.linearVelocity.x), 1f, 1f); // Flip player based on velocity
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
