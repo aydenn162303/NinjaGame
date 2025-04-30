@@ -25,9 +25,9 @@ public class CrawlState : PlayerBaseState
 
 
         // Check for Shoot input first
-        if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
+        if (stateMachine.InputReader.SwitchToIdle()) // Use InputReader property
         {
-            stateMachine.SwitchState(stateMachine.ShootState);
+            stateMachine.SwitchState(stateMachine.IdleState);
             return; // Exit early
         }
 

@@ -9,13 +9,12 @@ public class CrouchState : PlayerBaseState
     {
         // Calculate actual crouch speed based on multipliers
         // Walk speed is 0.5 * MoveSpeed, Crouch is half of Walk speed (0.25 * MoveSpeed)
-        crouchMoveSpeed = stateMachine.MoveSpeed * stateMachine.CrouchSpeedMultiplier;
+        crouchMoveSpeed = stateMachine.MoveSpeed * 0.25;
     }
 
     public override void Enter()
     {
         enterTime = Time.time;
-        stateMachine.SetColliderCrouching();
         // Play crouch animation
         if (stateMachine.Animator != null) {
             stateMachine.Animator.Play("Crouch"); // Replace with actual animation name
@@ -25,26 +24,14 @@ public class CrouchState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
-        // --- NEW: Check for loss of ground or wall contact ---
+        // --- NEW: Check for loss of ground contact ---
         if (!stateMachine.IsGrounded())
         {
-            if (stateMachine.IsTouchingWall() && stateMachine.RB.linearVelocity.y <= 0)
-            {
-                stateMachine.SwitchState(stateMachine.WallClingState);
-            }
-            else
-            {
-                stateMachine.SwitchState(stateMachine.FallState);
-            }
+            stateMachine.SwitchState(stateMachine.FallState);
+  
             return;
         }
 
-        // Check for Shoot input first
-        if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
-        {
-            stateMachine.SwitchState(stateMachine.ShootState);
-            return; // Exit early
-        }
 
         // --- Check for Exit Conditions ---
 
