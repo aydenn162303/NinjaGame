@@ -1,3 +1,4 @@
+@ -0,0 +1,92 @@
 using UnityEngine;
 
 public class CrawlState : PlayerBaseState
@@ -25,9 +26,9 @@ public class CrawlState : PlayerBaseState
 
 
         // Check for Shoot input first
-        if (stateMachine.InputReader.SwitchToIdle()) // Use InputReader property
+        if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
         {
-            stateMachine.SwitchState(stateMachine.IdleState);
+            stateMachine.SwitchState(stateMachine.ShootState);
             return; // Exit early
         }
 
