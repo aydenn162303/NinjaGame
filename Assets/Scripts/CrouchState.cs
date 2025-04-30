@@ -4,12 +4,13 @@ public class CrouchState : PlayerBaseState
 {
     private float enterTime;
     private float crouchMoveSpeed;
+    private float crouchMoveSpeedMultiplier = 0.5f; // Crouch speed multiplier
 
     public CrouchState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         // Calculate actual crouch speed based on multipliers
         // Walk speed is 0.5 * MoveSpeed, Crouch is half of Walk speed (0.25 * MoveSpeed)
-        crouchMoveSpeed = stateMachine.MoveSpeed * 0.25;
+        crouchMoveSpeed = stateMachine.MoveSpeed * crouchMoveSpeedMultiplier;
     }
 
     public override void Enter()
