@@ -6,6 +6,7 @@ public abstract class PlayerBaseState
 {
     protected PlayerStateMachine stateMachine;
 
+
     public PlayerBaseState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -86,6 +87,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("PlayerStateMachine Awake");
         // Get Components
         RB = GetComponent<Rigidbody2D>();
         Animator = GetComponentInChildren<Animator>(); // Or GetComponent<Animator>()
@@ -146,9 +148,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
-
-        
-
+        Debug.Log(GetMovementInput());
         // Update coyote time timer
         if (jumpGroundedGraceTimer > 0f)
             jumpGroundedGraceTimer -= Time.deltaTime;

@@ -12,6 +12,8 @@ public class ShootState : PlayerBaseState
         // Logic when entering the shoot state (e.g., play animation, aim)
         Debug.Log("Player entered Shoot State");
         // Ctx.Animator.SetBool("IsShooting", true); // Example animation trigger
+
+        
     }
 
     public override void Tick(float deltaTime)
@@ -21,10 +23,13 @@ public class ShootState : PlayerBaseState
         // Check for transitions out of the shoot state
         // Check for transitions out of the shoot state
         CheckSwitchStates(); // We'll keep this helper method for clarity
+
+
     }
 
     public override void Exit()
     {
+
         // Logic when exiting the shoot state (e.g., stop animation)
         Debug.Log("Player exited Shoot State");
         // Ctx.Animator.SetBool("IsShooting", false); // Example animation reset

@@ -73,7 +73,14 @@ public class RunState : PlayerBaseState
 
         if (moveInput == Vector2.zero)
         {
-            stateMachine.SwitchState(stateMachine.IdleState);
+            if (stateMachine.IdleState != null)
+            {
+                stateMachine.SwitchState(stateMachine.IdleState);
+            }
+            else
+            {
+                Debug.LogError("[RunState] IdleState is not initialized in the PlayerStateMachine.");
+            }
             return;
         }
 
