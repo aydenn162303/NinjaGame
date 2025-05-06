@@ -24,6 +24,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     // --- Coyote time (grounded grace period) ---
     private float jumpGroundedGraceTimer = 0f;
+    public GameObject arrowPrefab; // Assign in Inspector
     private const float jumpGroundedGraceDuration = 0.10f; // 0.1 seconds of grace after jumping
     [field: SerializeField] public float MoveSpeed { get; private set; } = 5f; // Example speed
     [field: SerializeField] public float WallJumpForce { get; private set; } = 7.5f;

@@ -7,12 +7,16 @@ public class ShootState : PlayerBaseState
 
     public ShootState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+    
+    private GameObject arrowPrefab; // Prefab for the arrow
     public override void Enter()
     {
         // Logic when entering the shoot state (e.g., play animation, aim)
         Debug.Log("Player entered Shoot State");
         // Ctx.Animator.SetBool("IsShooting", true); // Example animation trigger
+        arrowPrefab = stateMachine.arrowPrefab; // Accessing arrowPrefab through the stateMachine instance
 
+        ShootArrow();
         
     }
 
@@ -33,6 +37,11 @@ public class ShootState : PlayerBaseState
         // Logic when exiting the shoot state (e.g., stop animation)
         Debug.Log("Player exited Shoot State");
         // Ctx.Animator.SetBool("IsShooting", false); // Example animation reset
+    }
+
+    private void ShootArrow()
+    {
+        GameObject.Instantiate(arrowPrefab, stateMachine.PlayerTransform.position + new Vector3(1, 0, 0), Quaternion.identity);
     }
 
     // Helper method for transition checks (called from Tick)

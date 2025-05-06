@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffec91aed31c4c3b8a77c6630e5d50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 5712102804324706793, guid: c4c207f47a12b437caf8351d4cf61194, type: 3}
   <MoveSpeed>k__BackingField: 5
   <WallJumpForce>k__BackingField: 7.5
   <MaxJumps>k__BackingField: 2
