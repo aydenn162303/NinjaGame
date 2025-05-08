@@ -90,7 +90,7 @@ public class WalkState : PlayerBaseState
         float duration = Time.time - enterTime;
         if (duration > 0 && Mathf.FloorToInt(duration) % 2 == 0)
         {
-            Debug.Log($"[WalkState] Walking for {duration:F1} seconds");
+            //Debug.Log($"[WalkState] Walking for {duration:F1} seconds");
         }
     }
 

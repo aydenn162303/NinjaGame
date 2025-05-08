@@ -32,8 +32,8 @@ public class FallState : PlayerBaseState
             stateMachine.JumpsRemaining = stateMachine.MaxJumps;
             if (moveInput == Vector2.zero)
                 stateMachine.SwitchState(stateMachine.IdleState);
-            else if (stateMachine.InputReader.IsRunPressed())
-                stateMachine.SwitchState(stateMachine.RunState);
+            //else if (stateMachine.InputReader.IsRunPressed())
+                //stateMachine.SwitchState(stateMachine.RunState);
             else
                 stateMachine.SwitchState(stateMachine.WalkState);
             return;
