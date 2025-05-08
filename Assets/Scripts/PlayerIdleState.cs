@@ -45,6 +45,7 @@ public class PlayerIdleState : PlayerBaseState
             return; // Exit early after state switch
         }
 
+
         // Check for Jump input
         if (stateMachine.InputReader.IsJumpPressed())
         {
@@ -59,10 +60,14 @@ public class PlayerIdleState : PlayerBaseState
         Vector2 moveInput = stateMachine.InputReader.GetMovementInput(); // Use InputReader property
         if (moveInput != Vector2.zero)
         {
-            if (stateMachine.InputReader.IsRunPressed()) // Use InputReader property
+            /*if (stateMachine.InputReader.IsRunPressed()) // Use InputReader property
                 stateMachine.SwitchState(stateMachine.RunState);
             else
                 stateMachine.SwitchState(stateMachine.WalkState);
+
+                */
+            //temporary fix to stop idle animation playing from running
+            stateMachine.SwitchState(stateMachine.WalkState);
         }
     }
 

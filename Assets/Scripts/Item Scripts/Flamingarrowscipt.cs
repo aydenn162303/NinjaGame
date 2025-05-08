@@ -8,8 +8,8 @@ public class Flamingarrowscipt : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.up * 5f, ForceMode2D.Impulse); // Adjust the force as needed
-        rb.AddForce(transform.right * 8f, ForceMode2D.Impulse); // Adjust the force as needed
+        rb.AddForce(transform.up * 6.2f, ForceMode2D.Impulse); // Adjust the force as needed
+        rb.AddForce(transform.right * 7.5f, ForceMode2D.Impulse); // Adjust the force as needed
     }
 
     void Update()
@@ -28,9 +28,11 @@ public class Flamingarrowscipt : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && !touchedGround)
         {
             touchedGround = true;
-            rb.linearVelocity = Vector2.zero; // Stop the arrow
             rb.isKinematic = true; // Make the arrow kinematic to stop it from moving
-            transform.rotation = Quaternion.identity; // Reset the rotation
+            rb.bodyType = RigidbodyType2D.Static;
+            rb.linearVelocity = Vector2.zero; // Stop the arrow
+            
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
             Destroy(GetComponent<Collider2D>());
             Destroy(gameObject, 2f); // Destroy the arrow after 2 seconds
         }

@@ -46,6 +46,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Crouch Settings")]
     [SerializeField] public float CrouchSpeedMultiplier { get; private set; } = 0.25f; // Half of WalkState's 0.5 multiplier
+    public bool playerLastDirectionWasLeft = false; //start facing right
 
 
     private PlayerBaseState currentState;
@@ -149,7 +150,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GetMovementInput());
         // Update coyote time timer
         if (jumpGroundedGraceTimer > 0f)
             jumpGroundedGraceTimer -= Time.deltaTime;
@@ -165,7 +165,25 @@ public class PlayerStateMachine : MonoBehaviour
 
         currentState?.Tick(Time.deltaTime);
 
-        PlayerTransform.localScale = new Vector3(Mathf.Sign(RB.linearVelocity.x), 1f, 1f); // Flip player based on velocity
+
+        if(GetMovementInput().x < 0)
+        {
+            playerLastDirectionWasLeft = true;
+        }
+        else if(GetMovementInput().x > 0)
+        {
+            playerLastDirectionWasLeft = false;
+        }
+
+        if(playerLastDirectionWasLeft)
+        {
+            PlayerTransform.localScale = new Vector3(-1f, 1f, 1f); // Flip player based on velocity
+        }
+        else
+        {
+            PlayerTransform.localScale = new Vector3(1f, 1f, 1f); // Flip player based on velocity
+        }
+        //PlayerTransform.localScale = new Vector3(Mathf.Sign(RB.linearVelocity.x), 1f, 1f); // Flip player based on velocity
     }
 
     void OnTriggerEnter2D(Collider2D other)
