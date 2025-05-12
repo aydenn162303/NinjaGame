@@ -64,6 +64,7 @@ public class PlayerStateMachine : MonoBehaviour
     public SlideState SlideState { get; private set; }
     public WallClingState WallClingState { get; private set; }
     public ShootState ShootState { get; private set; } // Add ShootState declaration
+    public ShootFastState ShootFastState { get; private set; } // Add ShootFastState declaration
     public FallState FallState { get; private set; } // Add FallState declaration
 
     // Component References (Example)
@@ -136,6 +137,8 @@ public class PlayerStateMachine : MonoBehaviour
         stateRegistry[nameof(SlideState)] = SlideState;
         ShootState = new ShootState(this); // Initialize ShootState
         stateRegistry[nameof(ShootState)] = ShootState; // Register ShootState
+        ShootFastState = new ShootFastState(this); // Initialize ShootFastState
+        stateRegistry[nameof(ShootFastState)] = ShootFastState; // Register ShootFastState
         FallState = new FallState(this); // Initialize FallState
         stateRegistry[nameof(FallState)] = FallState; // Register FallState
 

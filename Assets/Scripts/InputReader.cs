@@ -48,4 +48,9 @@ public class InputReader
         return Input.GetButtonDown("Fire1");
         // If you want continuous fire while held, use GetButton("Fire1")
     }
+
+    public bool IsFastShootHeld()
+    {
+        return Input.GetKey(KeyCode.S);
+    }
 }
