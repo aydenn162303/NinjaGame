@@ -34,8 +34,11 @@ public class PlayerIdleState : PlayerBaseState
         // Check for Shoot input
         if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
         {
-            stateMachine.SwitchState(stateMachine.ShootState);
-            return; // Exit early
+            if (stateMachine.IsArrowCooldownOver()) 
+            {
+                stateMachine.SwitchState(stateMachine.ShootState);
+                return; // Exit early
+            }
         }
 
         // Check for Crouch input if grounded

@@ -5,11 +5,30 @@ public class Flamingarrowscipt : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool touchedGround = false;
+    private ParticleSystem particleSystem;
+    private GameObject player;
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        particleSystem = GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Stop();
+        }
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.up * 6.2f, ForceMode2D.Impulse); // Adjust the force as needed
-        rb.AddForce(transform.right * 7.5f, ForceMode2D.Impulse); // Adjust the force as needed
+
+        rb.AddForce(transform.up * 6.2f, ForceMode2D.Impulse);
+
+        if (player != null && player.GetComponent<PlayerStateMachine>().playerLastDirectionWasLeft)
+        {
+            rb.AddForce(-transform.right * 7.5f, ForceMode2D.Impulse);
+            transform.position = player.transform.position - new Vector3(1, 0, 0);
+        }
+        else
+        {
+            rb.AddForce(transform.right * 7.5f, ForceMode2D.Impulse);
+            transform.position = player.transform.position + new Vector3(1, 0, 0);
+        }
     }
 
     void Update()
@@ -34,7 +53,11 @@ public class Flamingarrowscipt : MonoBehaviour
             
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
             Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, 2f); // Destroy the arrow after 2 seconds
+            if (particleSystem != null)
+            {
+                particleSystem.Play();
+            }
+            Destroy(gameObject, 0.7f); // Destroy the arrow after 2 seconds
         }
     }
 

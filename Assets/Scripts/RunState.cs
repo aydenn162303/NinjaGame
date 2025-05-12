@@ -39,8 +39,11 @@ public class RunState : PlayerBaseState
         // Check for Shoot input first
         if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
         {
-            stateMachine.SwitchState(stateMachine.ShootState);
-            return; // Exit early
+            if (stateMachine.IsArrowCooldownOver()) 
+            {
+                stateMachine.SwitchState(stateMachine.ShootState);
+                return; // Exit early
+            }
         }
 
         Vector2 moveInput = stateMachine.InputReader.GetMovementInput(); // Use InputReader property

@@ -30,8 +30,11 @@ public class WallClingState : PlayerBaseState
         // Check for Shoot input first
         if (stateMachine.InputReader.IsShootPressed()) // Use InputReader property
         {
-            stateMachine.SwitchState(stateMachine.ShootState);
-            return; // Exit early
+            if (stateMachine.IsArrowCooldownOver()) 
+            {
+                stateMachine.SwitchState(stateMachine.ShootState);
+                return; // Exit early
+            }
         }
 
         // Apply slow downward slide

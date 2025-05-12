@@ -77,6 +77,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Transform PlayerTransform;
 
+    public float arrowCooldown = 1f;
+
     // State duration tracking
     private float stateEnterTime;
     public float GetStateDuration()
@@ -150,6 +152,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
+        arrowCooldown -= Time.deltaTime; // Decrease cooldown timer
         // Update coyote time timer
         if (jumpGroundedGraceTimer > 0f)
             jumpGroundedGraceTimer -= Time.deltaTime;
@@ -208,6 +211,19 @@ public class PlayerStateMachine : MonoBehaviour
     {
         // Delegate to the InputReader instance
         return InputReader.GetMovementInput();
+    }
+
+    public bool IsArrowCooldownOver()
+    {
+        if (arrowCooldown <= 0f)
+        {
+            arrowCooldown = 1f; // Reset cooldown
+            return true;
+        } 
+        else
+        {
+            return false;
+        }
     }
 
     public bool IsRunPressed()

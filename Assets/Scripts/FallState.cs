@@ -56,8 +56,11 @@ public class FallState : PlayerBaseState
         // Allow shooting in air
         if (stateMachine.InputReader.IsShootPressed())
         {
-            stateMachine.SwitchState(stateMachine.ShootState);
-            return;
+            if (stateMachine.IsArrowCooldownOver()) 
+            {
+                stateMachine.SwitchState(stateMachine.ShootState);
+                return; // Exit early
+            }
         }
     }
 
