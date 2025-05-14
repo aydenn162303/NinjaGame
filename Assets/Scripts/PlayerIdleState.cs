@@ -41,6 +41,12 @@ public class PlayerIdleState : PlayerBaseState
             }
         }
 
+        if (stateMachine.IsGrounded() && stateMachine.InputReader.IsFastShootHeld() && stateMachine.ShootFastBool) // Use InputReader property
+        {
+            stateMachine.SwitchState(stateMachine.ShootFastState);
+            return; // Exit early after state switch
+        }
+
         // Check for Crouch input if grounded
         if (stateMachine.IsGrounded() && stateMachine.InputReader.IsCrouchHeld()) // Use InputReader property
         {

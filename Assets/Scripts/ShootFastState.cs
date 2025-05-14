@@ -49,19 +49,40 @@ public class ShootFastState : PlayerBaseState
 
     private void ShootArrow()
     {
-        GameObject.Instantiate(arrowPrefab, stateMachine.PlayerTransform.position + new Vector3(1, 0, 0), Quaternion.identity);
+        // Calculate a random x offset and increased y position
+        Vector3 spawnPosition = stateMachine.PlayerTransform.position + new Vector3(Random.Range(-1f, 1f), 2f, 0);
+
+        // Instantiate the arrow at the calculated position
+        GameObject arrow = GameObject.Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
+
+        
+        var arrowScript = arrow.GetComponent<Flamingarrowscipt>(); 
+        if (arrowScript != null)
+        {
+            arrowScript.straightdown = true;
+        }
     }
 
     // Helper method for transition checks (called from Tick)
     private void CheckSwitchStates()
     {
-
         if (stateMachine.InputReader.IsJumpPressed() && stateMachine.JumpsRemaining > 0)
         {
             stateMachine.SwitchState(stateMachine.JumpState);
             return; // Exit early after state switch
         }
 
+        if (stateMachine.InputReader.IsRunPressed())
+        {
+            stateMachine.SwitchState(stateMachine.RunState);
+            return; // Exit early after state switch
+        }
+
+        if (!stateMachine.ShootFastBool)
+        {
+            stateMachine.SwitchState(stateMachine.IdleState);
+            return; // Exit early after state switch
+        }
     }
 
     // No InitializeSubState in the base class shown in PlayerStateMachine.cs

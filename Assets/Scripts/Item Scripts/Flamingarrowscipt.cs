@@ -7,6 +7,7 @@ public class Flamingarrowscipt : MonoBehaviour
     private bool touchedGround = false;
     private ParticleSystem particleSystem;
     private GameObject player;
+    public bool straightdown = false;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -19,15 +20,18 @@ public class Flamingarrowscipt : MonoBehaviour
 
         rb.AddForce(transform.up * 6.2f, ForceMode2D.Impulse);
 
-        if (player != null && player.GetComponent<PlayerStateMachine>().playerLastDirectionWasLeft)
+        if (!straightdown)
         {
-            rb.AddForce(-transform.right * 7.5f, ForceMode2D.Impulse);
-            transform.position = player.transform.position - new Vector3(1, 0, 0);
-        }
-        else
-        {
-            rb.AddForce(transform.right * 7.5f, ForceMode2D.Impulse);
-            transform.position = player.transform.position + new Vector3(1, 0, 0);
+            if (player != null && player.GetComponent<PlayerStateMachine>().playerLastDirectionWasLeft)
+            {
+                rb.AddForce(-transform.right * 7.5f, ForceMode2D.Impulse);
+                transform.position = player.transform.position - new Vector3(1, 0, 0);
+            }
+            else
+            {
+                rb.AddForce(transform.right * 7.5f, ForceMode2D.Impulse);
+                transform.position = player.transform.position + new Vector3(1, 0, 0);
+            }
         }
     }
 

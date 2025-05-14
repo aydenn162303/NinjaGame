@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 // Base class for all player states
 public abstract class PlayerBaseState
@@ -23,6 +25,11 @@ public class PlayerStateMachine : MonoBehaviour
     private bool wasGroundedLastFrame = true;
 
     // --- Coyote time (grounded grace period) ---
+
+    public Image abletoshootfast;
+    public TextMeshProUGUI coinText;
+
+    public bool ShootFastBool = false; //checks ability to shoot fast
     private float jumpGroundedGraceTimer = 0f;
     public GameObject arrowPrefab; // Assign in Inspector
     private const float jumpGroundedGraceDuration = 0.10f; // 0.1 seconds of grace after jumping
