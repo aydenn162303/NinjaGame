@@ -47,9 +47,18 @@ public class ShootState : PlayerBaseState
     // Helper method for transition checks (called from Tick)
     private void CheckSwitchStates()
     {
+
+
+        if (stateMachine.InputReader.IsFastShootHeld())
+        {
+            stateMachine.SwitchState(stateMachine.ShootFastState);
+            return;
+        }
+
         // If shoot button is released, transition to appropriate state
         if (!stateMachine.InputReader.IsShootPressed())
         {
+
             // Allow jump out of shoot if jump pressed
             if (stateMachine.InputReader.IsJumpPressed() && stateMachine.JumpsRemaining > 0)
             {
