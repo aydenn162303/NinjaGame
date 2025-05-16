@@ -35,8 +35,29 @@ public class Flamingarrowscipt : MonoBehaviour
         }
         else
         {
-            rb.AddForce(transform.up * 4.5f, ForceMode2D.Impulse);
+            bool isHorizontal = Random.Range(0, 3) == 1;
+            if (isHorizontal)
+            {
+                float randomforce = Random.Range(0.2f, 3f);
+                if (randomforce < 1.6f)
+                {
+                    rb.AddForce(-transform.right * randomforce, ForceMode2D.Impulse);
+                    transform.position = player.transform.position - new Vector3(1, 0, 0);
+                }
+                else
+                {
+                    rb.AddForce(transform.right * randomforce, ForceMode2D.Impulse);
+                    transform.position = player.transform.position + new Vector3(1, 0, 0);
+                }
+                straightdown = false;
+            }
+            else
+            {
+                rb.AddForce(transform.up * 4.5f, ForceMode2D.Impulse);
+            }
+
         }
+        
     }
 
     void Update()
@@ -70,7 +91,22 @@ public class Flamingarrowscipt : MonoBehaviour
                 rb.linearVelocity = new Vector2(direction * 2f, 0f);
                 rb.AddForce(transform.up * 8f, ForceMode2D.Impulse);
             }
+
+
         }
+
+        if (straightdown)
+        {
+            float ceilingTouch = 1f; 
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, ceilingTouch);
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(-transform.up * 10f, ForceMode2D.Impulse); 
+            }
+        }
+
     }
 
 
@@ -89,20 +125,25 @@ public class Flamingarrowscipt : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && !touchedGround)
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Itembox"))
         {
-            touchedGround = true;
-            rb.isKinematic = true; // Make the arrow kinematic to stop it from moving
-            rb.bodyType = RigidbodyType2D.Static;
-            rb.linearVelocity = Vector2.zero; // Stop the arrow
-
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
-            Destroy(GetComponent<Collider2D>());
-            if (particleSystem != null)
+            if (!touchedGround)
             {
-                particleSystem.Play();
+
+                touchedGround = true;
+                rb.isKinematic = true; // Make the arrow kinematic to stop it from moving
+                rb.bodyType = RigidbodyType2D.Static;
+                rb.linearVelocity = Vector2.zero; // Stop the arrow
+
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
+                Destroy(GetComponent<Collider2D>());
+                if (particleSystem != null)
+                {
+                    particleSystem.Play();
+                }
+                Destroy(gameObject, 0.7f); // Destroy the arrow after 2 seconds
+
             }
-            Destroy(gameObject, 0.7f); // Destroy the arrow after 2 seconds
         }
     }
 
