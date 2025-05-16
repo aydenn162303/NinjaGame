@@ -41,7 +41,7 @@ public class ShootFastState : PlayerBaseState
 
     public override void Exit()
     {
-
+        stateMachine.ShootFastBool = false; // Reset shoot fast state
         // Logic when exiting the shoot state (e.g., stop animation)
         Debug.Log("Player exited Shoot State");
         // Ctx.Animator.SetBool("IsShooting", false); // Example animation reset
@@ -56,10 +56,20 @@ public class ShootFastState : PlayerBaseState
         GameObject arrow = GameObject.Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
 
         
-        var arrowScript = arrow.GetComponent<Flamingarrowscipt>(); 
+        var arrowScript = arrow.GetComponent<Flamingarrowscipt>();
         if (arrowScript != null)
         {
             arrowScript.straightdown = true;
+            float tempforce = Random.Range(1f, 7.5f);
+            if (tempforce < 3.75f)
+            {
+                arrowScript.AddForce(true, tempforce);
+            }
+            else
+            {
+                arrowScript.AddForce(false, tempforce);
+            }
+            
         }
     }
 

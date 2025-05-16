@@ -26,6 +26,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     // --- Coyote time (grounded grace period) ---
 
+    public int coins = 0; // Number of coins collected
+    public int fastShootCoinRequired = 5; // Number of coins required to unlock fast shooting
     public Image abletoshootfast;
     public TextMeshProUGUI coinText;
 
@@ -99,6 +101,41 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
+
+        if (coinText == null)
+        {
+            GameObject coinObj = GameObject.Find("CoinCounter");
+            if (coinObj != null)
+            {
+                coinText = coinObj.GetComponent<TextMeshProUGUI>();
+                if (coinText == null)
+                {
+                    Debug.LogWarning("coincounter found but no TextMeshProUGUI component attached.", this);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Could not find 'coincounter' GameObject in the Canvas.", this);
+            }
+        }
+
+        // Find the "arrowImg" Image in the Canvas (if needed)
+        if (abletoshootfast == null)
+        {
+            GameObject arrowImgObj = GameObject.Find("ArrowImg");
+            if (arrowImgObj != null)
+            {
+                abletoshootfast = arrowImgObj.GetComponent<Image>();
+                if (abletoshootfast == null)
+                {
+                    Debug.LogWarning("arrowImg found but no Image component attached.", this);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Could not find 'arrowImg' GameObject in the Canvas.", this);
+            }
+        }
         Debug.Log("PlayerStateMachine Awake");
         // Get Components
         RB = GetComponent<Rigidbody2D>();
@@ -162,6 +199,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
+
+        if (coinText != null)
+        {
+            coinText.text = coins + "/" + fastShootCoinRequired;
+        }
+
         arrowCooldown -= Time.deltaTime; // Decrease cooldown timer
         // Update coyote time timer
         if (jumpGroundedGraceTimer > 0f)
@@ -201,9 +244,24 @@ public class PlayerStateMachine : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Coin"))
+        if (other.CompareTag("Coin") && ShootFastBool == false)
         {
             other.gameObject.SetActive(false);
+            coins++;
+            if (coins >= fastShootCoinRequired)
+            {
+                if (abletoshootfast != null)
+                {
+                    abletoshootfast.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("abletoshootfast is not assigned!", this);
+                }
+                ShootFastBool = true; // Unlock fast shooting
+                coins = 0;
+                fastShootCoinRequired += 1;
+            }
         }
     }
     public void SwitchState(PlayerBaseState newState)
